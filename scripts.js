@@ -1,4 +1,5 @@
 quizzes=[]
+quizzSelecionado=[]
 acessarApi();
 
 function acessarApi () {
@@ -16,7 +17,7 @@ function carregarDados (response) {
 function adcQuizzes () {
     for (let i=0; i<quizzes.length; i++) {
         document.querySelector(".quizzes").innerHTML+=`<div>
-        <img src="${quizzes[i].image}">
+        <img src="${quizzes[i].image}" onclick="selecionarQuizz(${i})">
         <h3>${quizzes[i].title}</h3>
     </div>`
     }
@@ -24,3 +25,8 @@ function adcQuizzes () {
 
 }
 
+function selecionarQuizz(i) {
+    document.querySelector(".tela1").classList.add('escondido')
+    document.querySelector(".tela2").classList.remove('escondido')
+    quizzSelecionado=quizzes[i]
+}
