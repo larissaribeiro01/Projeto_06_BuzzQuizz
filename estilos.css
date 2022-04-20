@@ -90,14 +90,11 @@ h3 {
     left: 16px;
     bottom: 16px;
 }
-<<<<<<< HEAD
 
 .escondido {
     display: none;
-=======
-.escondido {
-    display:none
 }
+
 .topo-quiz {
     margin-top: 69px;
     position: relative;
@@ -166,5 +163,16 @@ h3 {
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
->>>>>>> 43b6436e517a6a64b3936cf01bbc394f3eea7940
+}
+
+.respostaErrada {
+    color: red;
+}
+
+.respostaCerta {
+    color: green;
+}
+
+.naoSelecionada {
+    opacity: 0.6;
 }

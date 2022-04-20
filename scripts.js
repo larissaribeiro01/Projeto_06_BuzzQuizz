@@ -33,7 +33,7 @@ function selecionarQuizz(i) {
 
 
 function selecionarResposta (i, j) {
-    setInterval(function () {
+    setTimeout(function () {
         document.querySelector("."+question[i+1]).scrollIntoView();
     }, 2000)
     numRespostas=quizzSelecionado.questions[i].answers.length
