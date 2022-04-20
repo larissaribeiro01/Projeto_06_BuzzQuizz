@@ -28,5 +28,24 @@ function adcQuizzes () {
 function selecionarQuizz(i) {
     document.querySelector(".tela1").classList.add('escondido')
     document.querySelector(".tela2").classList.remove('escondido')
-    quizzSelecionado=quizzes[i]
+    quizzSelecionado=quizzes[i]    
+}
+
+
+function selecionarResposta (i, j) {
+    setInterval(function () {
+        document.querySelector("."+question[i+1]).scrollIntoView();
+    }, 2000)
+    numRespostas=quizzSelecionado.questions[i].answers.length
+    for (let y=0; y<numRespostas; y++) {
+        if (y!=j) {
+            document.querySelector("."+questions[i].answers[y]).classList.add('naoSelecionada')
+        }
+    }
+    if (quizzSelecionado.questions[i].answers[j].isCorrectAnswer) {
+        document.querySelector("."+questions[i].answers[j]).classList.add('respostaCerta')
+    } else {
+        document.querySelector(elemento).classList.add('respostaErrada')
+    }
+    
 }
