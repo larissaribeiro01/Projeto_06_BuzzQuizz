@@ -1,6 +1,8 @@
 quizzes=[]
 quizzSelecionado=[]
 acessarApi();
+let acertos=0;
+let score=0;
 
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
@@ -78,6 +80,8 @@ function selecionarResposta (i, j) {
         for (let y=0; y<numRespostas; y++) {
             if (y!=j) {
                 document.querySelector(".imagem.q"+i+".a"+y).classList.add('naoSelecionada')
+            } else if (y==j && quizzSelecionado.questions[i].answers[j].isCorrectAnswer==true) {
+                acertos+=1;
             }
         }
     }
@@ -89,5 +93,31 @@ function selecionarResposta (i, j) {
             document.querySelector(".texto-opcao.q"+i+".a"+y).classList.add('respostaErrada')
         }
     }
+    score=Math.round((acertos/quizzSelecionado.questions.length)*100)
+    if (i==quizzSelecionado.questions.length-1) {
+        resultado();
+    }
     
+}
+
+function resultado () {
+    let nivels=quizzSelecionado.levels;
+    for (let i=0; i<nivels.length; i++) {
+        if (nivels[i].minValue<=score) {
+            document.querySelector(".resultado").innerHTML=`
+        <div class="container-pergunta">
+            <div class="box-texto" style="background-color: red;">
+                <span>${nivels[i].title}</span>
+            </div>
+            <div class="box-opcoes">
+                <div class="opcao">
+                    <img src="${nivels[i].image}" />
+                </div>
+                <div class="texto-opcao">${nivels[i].text}</div>
+            </div>    
+        </div>`
+        document.querySelector(".resultado").scrollIntoView();
+
+        }
+    }
 }
