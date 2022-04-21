@@ -32,6 +32,14 @@ function selecionarQuizz(i) {
     comecarQuiz(quizzSelecionado);
 }
 function comecarQuiz (quiz){
+    console.log(quiz)
+    const tituloQuiz = quiz.title;
+    const tituloQuizDiv = document.querySelector(".topo-quiz span")
+    tituloQuizDiv.innerHTML = tituloQuiz
+
+    const imgQuiz = quiz.image;
+    const imgQuizDiv = document.querySelector(".topo-quiz img").setAttribute("src",quiz.image)
+    
     const perguntas = quiz.questions;
     const perguntaDiv = document.querySelector(".conteudo-quiz")
     for(let i = 0; i< perguntas.length; i++){
