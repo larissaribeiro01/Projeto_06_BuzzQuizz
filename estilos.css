@@ -90,15 +90,11 @@ h3 {
     left: 16px;
     bottom: 16px;
 }
-<<<<<<< HEAD
-
-.escondido {
-    display: none;
-=======
 .escondido {
     display:none
 }
 .topo-quiz {
+    background-color: #000000;
     margin-top: 69px;
     position: relative;
     width: 100%;
@@ -108,7 +104,7 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    
+    opacity: 0.4;
 }
 .topo-quiz span {
     color: white;
@@ -126,11 +122,12 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 40px;
 }
 .container-pergunta {
     background-color: white;
     padding: 30px;
-    width: 750px;
+    width: 700px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 
 }
@@ -140,6 +137,7 @@ h3 {
     justify-content: center;
     align-items: center;
     background-color: rgb(47, 22, 158);
+    margin-bottom: 20px;
 }
 .box-texto span {
     color:white;
@@ -150,21 +148,20 @@ h3 {
 .box-opcoes {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 .opcao {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 10px 20px;
 }
 .opcao img {
     width: 330px;
     height: 175px;
 }
 .texto-opcao {
-    margin-top: 10px;
+    margin: 10px 0px;
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
->>>>>>> 43b6436e517a6a64b3936cf01bbc394f3eea7940
 }
