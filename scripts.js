@@ -47,7 +47,7 @@ function comecarQuiz (quiz){
         respostas.sort(comparador);
         perguntaDiv.innerHTML += `
         <div class="container-pergunta">
-            <div class="box-texto" style="background-color:${perguntas[i].color};">
+            <div class="box-texto q${i}" style="background-color:${perguntas[i].color};">
                 <span>${perguntas[i].title}</span>
             </div>
             <div class="box-opcoes"></div>
@@ -70,14 +70,18 @@ function comparador() {
 function selecionarResposta (i, j) {
     next=i+1
     setTimeout(function () {
-        document.querySelector(".q"+next).scrollIntoView();
+        document.querySelector(".box-texto.q"+next).scrollIntoView();
     }, 2000)
     numRespostas=quizzSelecionado.questions[i].answers.length
-    for (let y=0; y<numRespostas; y++) {
-        if (y!=j) {
-            document.querySelector(".imagem.q"+i+".a"+y).classList.add('naoSelecionada')
+    const naoSelect=document.querySelector(".imagem.q"+i+".a"+j+".naoSelecionada")
+    if (naoSelect==null) {
+        for (let y=0; y<numRespostas; y++) {
+            if (y!=j) {
+                document.querySelector(".imagem.q"+i+".a"+y).classList.add('naoSelecionada')
+            }
         }
     }
+
     for (let y=0; y<numRespostas; y++) {
         if (quizzSelecionado.questions[i].answers[y].isCorrectAnswer) {
             document.querySelector(".texto-opcao.q"+i+".a"+y).classList.add('respostaCerta')
