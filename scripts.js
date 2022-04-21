@@ -32,35 +32,47 @@ function selecionarQuizz(i) {
     comecarQuiz(quizzSelecionado);
 }
 function comecarQuiz (quiz){
-    console.log(quiz)
     const perguntas = quiz.questions;
-    console.log(perguntas[0].answers)
     const perguntaDiv = document.querySelector(".conteudo-quiz")
     for(let i = 0; i< perguntas.length; i++){
         const respostas = perguntas[i].answers;
+        respostas.sort(comparador);
         perguntaDiv.innerHTML += `
         <div class="container-pergunta">
             <div class="box-texto" style="background-color:${perguntas[i].color};">
                 <span>${perguntas[i].title}</span>
             </div>
-            <div class="box-opcoes">
-                <div class="opcao">
-                    <img src="${respostas[0].text}" alt=""><span class="texto-opcao">r${respostas[0].text}</span>
-                </div>
-                <div class="opcao">
-                     <img src="${respostas[1].text}" alt=""><span class="texto-opcao">${respostas[1].text}</span>
-                 </div>
-                <div class="opcao">
-                    <img src="${respostas[2].text}" alt=""><span class="texto-opcao">${respostas[2].text}</span>
-                </div>
-                <div class="opcao">
-                    <img src="${respostas[3].text}" alt=""><span class="texto-opcao">${respostas[3].text}</span>
-                </div>
-            </div>
+            <div class="box-opcoes"></div>
         </div>`
+        for(let j = 0; j<respostas.length;j++){
+            const todasRespostasDiv = document.querySelectorAll(".box-opcoes");
+            todasRespostasDiv[i].innerHTML += `
+            <div class="opcao">
+                <img src="${respostas[j].image}" alt=""><span class="texto-opcao">${respostas[j].text}</span>
+            </div>`
+        }
     }
     
 }
-function embaralhar() {
+function comparador() {
+    return Math.random() - 0.5;
+}
 
+
+function selecionarResposta (i, j) {
+    setInterval(function () {
+        document.querySelector("."+question[i+1]).scrollIntoView();
+    }, 2000)
+    numRespostas=quizzSelecionado.questions[i].answers.length
+    for (let y=0; y<numRespostas; y++) {
+        if (y!=j) {
+            document.querySelector("."+questions[i].answers[y]).classList.add('naoSelecionada')
+        }
+    }
+    if (quizzSelecionado.questions[i].answers[j].isCorrectAnswer) {
+        document.querySelector("."+questions[i].answers[j]).classList.add('respostaCerta')
+    } else {
+        document.querySelector(elemento).classList.add('respostaErrada')
+    }
+    
 }

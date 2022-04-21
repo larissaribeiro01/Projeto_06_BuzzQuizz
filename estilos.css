@@ -93,6 +93,7 @@ h3 {
 .escondido {
     display:none
 }
+
 .topo-quiz {
     background-color: #000000;
     margin-top: 69px;
@@ -164,4 +165,16 @@ h3 {
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
+}
+
+.respostaErrada {
+    color: red;
+}
+
+.respostaCerta {
+    color: green;
+}
+
+.naoSelecionada {
+    opacity: 0.6;
 }
