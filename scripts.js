@@ -112,7 +112,7 @@ function resultado () {
                 <div class="opcao">
                     <img src="${nivels[i].image}" />
                 </div>
-                <div class="texto-opcao">${nivels[i].text}</div>
+                <span class="texto-opcao">${nivels[i].text}</div>
             </div>    
         </div>`
         document.querySelector(".resultado").scrollIntoView();
