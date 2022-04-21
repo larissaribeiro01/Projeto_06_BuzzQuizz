@@ -167,6 +167,7 @@ h3 {
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
+    max-width: 329px;
 }
 .conteudo{
     margin-top: 140px;
