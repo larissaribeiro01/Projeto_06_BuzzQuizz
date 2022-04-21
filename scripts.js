@@ -141,7 +141,16 @@ function reiniciarQuizz () {
 }
 
 function voltarHome () {
+    acertos=0;
+    quizzSelecionado=[];
+    document.querySelector(".resultado").innerHTML=" "
+    document.querySelector(".conteudo-quiz").innerHTML=" "
     document.querySelector(".tela1").classList.remove('escondido');
     document.querySelector(".tela2").classList.add('escondido');
     document.querySelector(".tela1").scrollIntoView(true);
+}
+
+function criarQuizz () {
+    document.querySelector(".tela3").classList.remove('escondido');
+    document.querySelector(".tela1").classList.add('escondido');
 }
