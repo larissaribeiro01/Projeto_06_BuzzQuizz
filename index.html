@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BuzzQuizz</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
     <div class="barratopo">BuzzQuizz</div>
-    <div class="tela1">
+    <div class="tela1 escondido">
         <div class="quizzbox">
             <h1>Você não criou nenhum quizz ainda :(</h1>
             <div class="criarquizz">
@@ -24,10 +24,53 @@
     </div>
     <div class="tela2 escondido">
         <div class="topo-quiz">
-            <img src="/imgs teste/3352658.jpg">
+            <img src="">
             <span></span>  
         </div>
         <div class="conteudo-quiz"></div>
+    </div>
+    <div class="tela3">
+        <div class="comeco escondido">
+            <div class="conteudo">
+                <span>Comece pelo começo</span>
+                <div class="container-inputs">
+                    <input type="text" placeholder="Título do seu quizz">
+                    <input type="text" placeholder="URL da imagem do seu quizz">
+                    <input type="text" placeholder="Quantidades de perguntas do quizz">
+                    <input type="text" placeholder="Quantidades de níveis do quizz">
+                </div>
+                <button>Prosseguir pra criar perguntas</button>
+            </div>
+        </div>
+        <div class="criar-perguntas">
+            <div class="conteudo">
+                <span>Crie suas perguntas</span>
+                <div class="container-inputs">
+                    <span>Pergunta 1</span>
+                    <input type="text" placeholder="Texto da pergunta">
+                    <input type="text" placeholder="Cor de fundo da da pergunta">
+                    <span>Resposta correta</span>
+                    <input type="text" placeholder="Resposta correta">
+                    <input type="text" placeholder="URL da imagem">
+                    <span>Respostas incorretas</span>
+                    <input type="text" placeholder="Resposta incorreta 1">
+                    <input type="text" placeholder="URL da imagem 1">
+                    <div class="espaco"></div>
+                    <input type="text" placeholder="Resposta incorreta 2">
+                    <input type="text" placeholder="URL da imagem 2">
+                    <div class="espaco"></div>
+                    <input type="text" placeholder="Resposta incorreta 3">
+                    <input type="text" placeholder="URL da imagem 3">
+                </div>
+                <div class="proxima-pergunta container-inputs">
+                    <span>Pergunta 2</span><img src="/src/Vector (1).png" alt="">
+                </div>
+                <div class="proxima-pergunta container-inputs"></div>
+                <button>Prosseguir pra criar níveis</button>
+            </div>
+        </div>
+        
+        
     </div>
  
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>   
