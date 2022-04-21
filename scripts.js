@@ -48,7 +48,7 @@ function comecarQuiz (quiz){
             const todasRespostasDiv = document.querySelectorAll(".box-opcoes");
             todasRespostasDiv[i].innerHTML += `
             <div class="opcao">
-                <img src="${respostas[j].image}" alt=""><span class="texto-opcao">${respostas[j].text}</span>
+                <img src="${respostas[j].image}" alt="" onclick="selecionarResposta(${i},${j})" class="imagem q${i} a${j}" ><span class="texto-opcao q${i} a${j}">${respostas[j].text}</span>
             </div>`
         }
     }
@@ -60,19 +60,22 @@ function comparador() {
 
 
 function selecionarResposta (i, j) {
+    next=i+1
     setTimeout(function () {
-        document.querySelector("."+question[i+1]).scrollIntoView();
+        document.querySelector(".q"+next).scrollIntoView();
     }, 2000)
     numRespostas=quizzSelecionado.questions[i].answers.length
     for (let y=0; y<numRespostas; y++) {
         if (y!=j) {
-            document.querySelector("."+questions[i].answers[y]).classList.add('naoSelecionada')
+            document.querySelector(".imagem.q"+i+".a"+y).classList.add('naoSelecionada')
         }
     }
-    if (quizzSelecionado.questions[i].answers[j].isCorrectAnswer) {
-        document.querySelector("."+questions[i].answers[j]).classList.add('respostaCerta')
-    } else {
-        document.querySelector(elemento).classList.add('respostaErrada')
+    for (let y=0; y<numRespostas; y++) {
+        if (quizzSelecionado.questions[i].answers[y].isCorrectAnswer) {
+            document.querySelector(".texto-opcao.q"+i+".a"+y).classList.add('respostaCerta')
+        } else {
+            document.querySelector(".texto-opcao.q"+i+".a"+y).classList.add('respostaErrada')
+        }
     }
     
 }
