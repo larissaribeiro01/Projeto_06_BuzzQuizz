@@ -215,6 +215,7 @@ input {
     border: 1px solid #D1D1D1;
     box-sizing: border-box;
     border-radius: 5px;
+    font-size: 14px;
 }
 input::placeholder{
     color: #BABABA;

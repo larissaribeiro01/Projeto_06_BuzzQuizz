@@ -161,13 +161,13 @@ function verificarInformacoesBasicas() {
     imagemQuiz = document.querySelector(".container-inputs input:nth-child(2)").value
     qtdsPerguntasQuiz = Number(document.querySelector(".container-inputs input:nth-child(3)").value)
     qtdsNiveisQuiz = Number(document.querySelector(".container-inputs input:nth-child(4)").value)
-    console.log(validarInfosBasicas())
-    if(validarInfosBasicas()){
+
+    if(true){
         document.querySelector(".comeco").classList.add("escondido")
         document.querySelector(".criar-perguntas").classList.remove("escondido")
         gerarCriacaoPerguntas();
     }else{
-        alert("Preencha os dados corretamente");
+        alert("Preencha os dados corretamente!");
     }
 }
 function gerarCriacaoPerguntas(){
@@ -175,13 +175,13 @@ function gerarCriacaoPerguntas(){
     console.log(qtdsPerguntasQuiz)
     for(let i = 1; i <= qtdsPerguntasQuiz; i++){
         criarPerguntasDiv.innerHTML += `
-        <div class="container-inputs" onclick ="abrirEditarPergunta(this)">
-            <div class="topo-container-inputs" ">
+        <div class="container-inputs">
+            <div class="topo-container-inputs" onclick ="abrirEditarPergunta(this)">
                <span>Pergunta ${i}</span><img src="/src/icon-edit.png">
            </div>
             <div class="box-inputs escondido">
                 <div class="inputs">
-                    <input id="pergunta${i}Titulo" type="text" placeholder="Texto da pergunta">
+                    <input id="pergunta${i}titulo" type="text" placeholder="Texto da pergunta">
                     <input id="pergunta${i}Cor" type="text" placeholder="Cor de fundo da da pergunta">
                     <span>Resposta correta</span>
                     <input id="pergunta${i}RespostaCertaTexto" type="text" placeholder="Resposta correta">
@@ -199,20 +199,19 @@ function gerarCriacaoPerguntas(){
             </div>
         </div>
         `
+        const primeiraPergunta = document.querySelector(".box-inputs");
+        primeiraPergunta.classList.remove("escondido");
+        const primeiroIConEdit = document.querySelector(".topo-container-inputs img");
+        primeiroIConEdit.classList.add("escondido");
     }
-    const primeiroCriarPergunta = document.querySelector(".box-inputs");
-    const primeiroIconEditPergunta = document.querySelector(".topo-container-inputs img")
-    primeiroCriarPergunta.classList.remove("escondido");
-    primeiroCriarPergunta.classList.add("aberto");
-    primeiroIconEditPergunta.classList.add("escondido");
 }
 function abrirEditarPergunta(elemento){
-    console.log(document.querySelector(".aberto") != null)
-    if(document.querySelector(".aberto") != null){
-        document.querySelector(".aberto").classList.add("escondido");
-        document.querySelector(".aberto").classList.remove("aberto");
-        document.querySelector(".escondio img").classList.remove("escondido")
-    }
+    const criarPerguntaDiv = elemento.parentNode.querySelector(".box-inputs")
+    const iconEdit = elemento.querySelector("img")
+    criarPerguntaDiv.classList.toggle("escondido")
+    iconEdit.classList.toggle("escondido")
+    console.log(document.getElementById("pergunta1titulo"))
+
 }
 
 function validarInfosBasicas(){
