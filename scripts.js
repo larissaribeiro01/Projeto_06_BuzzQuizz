@@ -3,7 +3,8 @@ quizzSelecionado=[]
 acessarApi();
 let acertos=0;
 let score=0;
-
+let tituloQuiz;
+let qtdsPerguntasQuiz;
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
     promise.then(carregarDados); 
@@ -18,9 +19,9 @@ function carregarDados (response) {
 
 function adcQuizzes () {
     for (let i=0; i<quizzes.length; i++) {
-        document.querySelector(".quizzes").innerHTML+=`<div style="background-image: url('${quizzes[i].image}');" onclick="selecionarQuizz(${i})">
-        <img src="${quizzes[i].image}" onclick="selecionarQuizz(${i})">
-        <h3>${quizzes[i].title}</h3>
+        document.querySelector(".quizzes").innerHTML+=`<div>
+        <img src="${quizzes[i].image}" >
+        <h3 onclick="selecionarQuizz(${i})">${quizzes[i].title}</h3>
     </div>`
     }
     
