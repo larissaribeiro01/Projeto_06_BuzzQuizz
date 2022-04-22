@@ -154,7 +154,6 @@ function voltarHome () {
 function criarQuizz () {
     document.querySelector(".tela3").classList.remove('escondido');
     document.querySelector(".tela1").classList.add('escondido');
-<<<<<<< HEAD
 }
 
 function verificarInformacoesBasicas() {
@@ -230,6 +229,5 @@ function validURL(str) {
       '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(str);
   }
-=======
-}
->>>>>>> 2a1919665520affc57ef5ad593e2a87f6981b95e
+
+  function acessar
