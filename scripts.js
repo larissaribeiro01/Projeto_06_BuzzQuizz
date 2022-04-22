@@ -32,6 +32,7 @@ function selecionarQuizz(i) {
     document.querySelector(".tela1").classList.add('escondido')
     document.querySelector(".tela2").classList.remove('escondido')
     quizzSelecionado=quizzes[i]
+    document.querySelector(".tela2").scrollIntoView(true)
     comecarQuiz(quizzSelecionado);
 }
 function comecarQuiz (quiz){
@@ -114,18 +115,47 @@ function resultado () {
                     <img src="${nivels[i].image}" />
                 </div>
                 <span class="texto-opcao">${nivels[i].text}</div>
-            </div>    
+            </div>
+            <button class="reiniciar" onclick="reiniciarQuizz()">Reiniciar Quizz</button>
+            <span class="voltarhome" onclick="voltarHome()">Voltar para home</span>    
         </div>`
+        
         document.querySelector(".resultado").scrollIntoView();
 
         }
     }
 }
 
-function abrirTelaCriarQuiz() {
-    document.querySelector(".tela1").classList.add("escondido")
-    document.querySelector(".tela3").classList.remove("escondido")
+function reiniciarQuizz () {
+    acertos=0
+    document.querySelector(".resultado").innerHTML=" "
+    for (let i=0; i<quizzSelecionado.questions.length; i++){
+        numRespostas=quizzSelecionado.questions[i].answers.length
+        for (let y=0; y<numRespostas; y++) {
+            document.querySelector(".texto-opcao.q"+i+".a"+y).classList.remove('respostaCerta');
+            document.querySelector(".texto-opcao.q"+i+".a"+y).classList.remove('respostaErrada');
+            document.querySelector(".imagem.q"+i+".a"+y).classList.remove('naoSelecionada');
+        }
+    }
+    
+    document.querySelector(".tela2").scrollIntoView(true);
 }
+
+function voltarHome () {
+    acertos=0;
+    quizzSelecionado=[];
+    document.querySelector(".resultado").innerHTML=" "
+    document.querySelector(".conteudo-quiz").innerHTML=" "
+    document.querySelector(".tela1").classList.remove('escondido');
+    document.querySelector(".tela2").classList.add('escondido');
+    document.querySelector(".tela1").scrollIntoView(true);
+}
+
+function criarQuizz () {
+    document.querySelector(".tela3").classList.remove('escondido');
+    document.querySelector(".tela1").classList.add('escondido');
+}
+
 function verificarInformacoesBasicas() {
     tituloQuiz = document.querySelector(".container-inputs input:nth-child(1)").value
     imagemQuiz = document.querySelector(".container-inputs input:nth-child(2)").value
