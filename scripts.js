@@ -3,8 +3,7 @@ quizzSelecionado=[]
 acessarApi();
 let acertos=0;
 let score=0;
-let tituloQuiz;
-let qtdsPerguntasQuiz;
+
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
     promise.then(carregarDados); 
@@ -19,7 +18,7 @@ function carregarDados (response) {
 
 function adcQuizzes () {
     for (let i=0; i<quizzes.length; i++) {
-        document.querySelector(".quizzes").innerHTML+=`<div>
+        document.querySelector(".quizzes").innerHTML+=`<div style="background-image: url('${quizzes[i].image}');" onclick="selecionarQuizz(${i})">
         <img src="${quizzes[i].image}" onclick="selecionarQuizz(${i})">
         <h3>${quizzes[i].title}</h3>
     </div>`
@@ -155,78 +154,3 @@ function criarQuizz () {
     document.querySelector(".tela3").classList.remove('escondido');
     document.querySelector(".tela1").classList.add('escondido');
 }
-
-function verificarInformacoesBasicas() {
-    tituloQuiz = document.querySelector(".container-inputs input:nth-child(1)").value
-    imagemQuiz = document.querySelector(".container-inputs input:nth-child(2)").value
-    qtdsPerguntasQuiz = Number(document.querySelector(".container-inputs input:nth-child(3)").value)
-    qtdsNiveisQuiz = Number(document.querySelector(".container-inputs input:nth-child(4)").value)
-    console.log(validarInfosBasicas())
-    if(validarInfosBasicas()){
-        document.querySelector(".comeco").classList.add("escondido")
-        document.querySelector(".criar-perguntas").classList.remove("escondido")
-        gerarCriacaoPerguntas();
-    }else{
-        alert("Preencha os dados corretamente");
-    }
-}
-function gerarCriacaoPerguntas(){
-    let criarPerguntasDiv = document.querySelector(".container-perguntas");
-    console.log(qtdsPerguntasQuiz)
-    for(let i = 1; i <= qtdsPerguntasQuiz; i++){
-        criarPerguntasDiv.innerHTML += `
-        <div class="container-inputs" onclick ="abrirEditarPergunta(this)">
-            <div class="topo-container-inputs" ">
-               <span>Pergunta ${i}</span><img src="/src/icon-edit.png">
-           </div>
-            <div class="box-inputs escondido">
-                <div class="inputs">
-                    <input id="pergunta${i}Titulo" type="text" placeholder="Texto da pergunta">
-                    <input id="pergunta${i}Cor" type="text" placeholder="Cor de fundo da da pergunta">
-                    <span>Resposta correta</span>
-                    <input id="pergunta${i}RespostaCertaTexto" type="text" placeholder="Resposta correta">
-                    <input id="pergunta${i}RespostaCertaImagem" type="text" placeholder="URL da imagem">
-                    <span>Respostas incorretas</span>
-                    <input type="text" placeholder="Resposta incorreta 1">
-                    <input type="text" placeholder="URL da imagem 1">
-                    <div class="espaco"></div>
-                    <input type="text" placeholder="Resposta incorreta 2">
-                    <input type="text" placeholder="URL da imagem 2">
-                    <div class="espaco"></div>
-                    <input type="text" placeholder="Resposta incorreta 3">
-                    <input type="text" placeholder="URL da imagem 3">
-                </div>
-            </div>
-        </div>
-        `
-    }
-    const primeiroCriarPergunta = document.querySelector(".box-inputs");
-    const primeiroIconEditPergunta = document.querySelector(".topo-container-inputs img")
-    primeiroCriarPergunta.classList.remove("escondido");
-    primeiroCriarPergunta.classList.add("aberto");
-    primeiroIconEditPergunta.classList.add("escondido");
-}
-function abrirEditarPergunta(elemento){
-    console.log(document.querySelector(".aberto") != null)
-    if(document.querySelector(".aberto") != null){
-        document.querySelector(".aberto").classList.add("escondido");
-        document.querySelector(".aberto").classList.remove("aberto");
-        document.querySelector(".escondio img").classList.remove("escondido")
-    }
-}
-
-function validarInfosBasicas(){
-    if(tituloQuiz.length > 19 && tituloQuiz.length < 66 && validURL(imagemQuiz) && qtdsPerguntasQuiz >= 3 && qtdsNiveisQuiz >= 2){
-        return true;
-    }
-    return false;
-}
-function validURL(str) {
-    let pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-    return !!pattern.test(str);
-  }
