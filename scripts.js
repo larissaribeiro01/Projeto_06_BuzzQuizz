@@ -20,8 +20,8 @@ function carregarDados (response) {
 function adcQuizzes () {
     for (let i=0; i<quizzes.length; i++) {
         document.querySelector(".quizzes").innerHTML+=`<div>
-        <img src="${quizzes[i].image}" onclick="selecionarQuizz(${i})">
-        <h3>${quizzes[i].title}</h3>
+        <img src="${quizzes[i].image}" >
+        <h3 onclick="selecionarQuizz(${i})">${quizzes[i].title}</h3>
     </div>`
     }
     
@@ -154,6 +154,7 @@ function voltarHome () {
 function criarQuizz () {
     document.querySelector(".tela3").classList.remove('escondido');
     document.querySelector(".tela1").classList.add('escondido');
+<<<<<<< HEAD
 }
 
 function verificarInformacoesBasicas() {
@@ -229,3 +230,6 @@ function validURL(str) {
       '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(str);
   }
+=======
+}
+>>>>>>> 2a1919665520affc57ef5ad593e2a87f6981b95e
