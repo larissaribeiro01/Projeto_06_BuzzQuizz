@@ -5,6 +5,7 @@ let acertos=0;
 let score=0;
 let tituloQuiz;
 let qtdsPerguntasQuiz;
+let listaSeusQuizzes=[];
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
     promise.then(carregarDados); 
@@ -14,12 +15,13 @@ function acessarApi () {
 function carregarDados (response) {
     quizzes=response.data;
     adcQuizzes ();
+    adcSeusQuizzes();
     
 }
 
 function adcQuizzes () {
     for (let i=0; i<quizzes.length; i++) {
-        document.querySelector(".quizzes").innerHTML+=`<div>
+        document.querySelector(".quizzes.geral").innerHTML+=`<div>
         <img src="${quizzes[i].image}">
         <h3 onclick="selecionarQuizz(${i})">${quizzes[i].title}</h3>
     </div>`
@@ -260,3 +262,29 @@ function validColorHex(str){
     let teste = /^#[0-9A-F]{6}$/i
     return teste.test(str);
 }
+
+
+function adcSeusQuizzes () {
+    const seusQuizzesSerializado=localStorage.getItem("seusQuizzes")
+    const listaSeusQuizzes=JSON.parse(seusQuizzesSerializado);
+    if (listaSeusQuizzes!=null) {
+        document.querySelector(".seusquizzes").classList.remove('escondido')
+        document.querySelector(".quizzbox").classList.add('escondido')
+        for (let i=0; i<listaSeusQuizzes.length; i++) {
+            document.querySelector(".quizzes").innerHTML+=`<div>
+            <img src="${listaSeusQuizzes[i].image}">
+            <h3 onclick="selecionarSeuQuizz(${i})">${listaSeusQuizzes.title}</h3>
+        </div>`
+        }
+    }
+
+}  
+
+function selecionarSeuQuizz(i) {
+    document.querySelector(".tela1").classList.add('escondido')
+    document.querySelector(".tela2").classList.remove('escondido')
+    quizzSelecionado=listaSeusQuizzes[i]
+    document.querySelector(".tela2").scrollIntoView(true)
+    comecarQuiz(quizzSelecionado);
+}
+

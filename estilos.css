@@ -301,3 +301,15 @@ button:active{
     text-align: center;
 
 }
+
+ion-icon {
+    position: absolute;
+    top: 142px;
+    left: 290px;
+    width: 31px;
+    height: 31px;
+    color: white;
+    background-color: red;
+    border-radius: 15px;
+}
+
