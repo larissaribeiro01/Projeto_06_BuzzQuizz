@@ -172,7 +172,6 @@ function verificarInformacoesBasicas() {
 }
 function gerarCriacaoPerguntas(){
     let criarPerguntasDiv = document.querySelector(".container-perguntas");
-    console.log(qtdsPerguntasQuiz)
     for(let i = 1; i <= qtdsPerguntasQuiz; i++){
         criarPerguntasDiv.innerHTML += `
         <div class="container-inputs">
@@ -181,39 +180,67 @@ function gerarCriacaoPerguntas(){
            </div>
             <div class="box-inputs escondido">
                 <div class="inputs">
-                    <input id="pergunta${i}titulo" type="text" placeholder="Texto da pergunta">
+                    <input id="pergunta${i}Titulo" type="text" placeholder="Texto da pergunta">
                     <input id="pergunta${i}Cor" type="text" placeholder="Cor de fundo da da pergunta">
                     <span>Resposta correta</span>
                     <input id="pergunta${i}RespostaCertaTexto" type="text" placeholder="Resposta correta">
                     <input id="pergunta${i}RespostaCertaImagem" type="text" placeholder="URL da imagem">
                     <span>Respostas incorretas</span>
-                    <input type="text" placeholder="Resposta incorreta 1">
-                    <input type="text" placeholder="URL da imagem 1">
+                    <input class="pergunta${i}RespostaTexto" type="text" placeholder="Resposta incorreta 1">
+                    <input class="pergunta${i}RespostaImagem" type="text" placeholder="URL da imagem 1">
                     <div class="espaco"></div>
-                    <input type="text" placeholder="Resposta incorreta 2">
-                    <input type="text" placeholder="URL da imagem 2">
+                    <input class="pergunta${i}RespostaTexto" type="text" placeholder="Resposta incorreta 2">
+                    <input class="pergunta${i}RespostaImagem" type="text" placeholder="URL da imagem 2">
                     <div class="espaco"></div>
-                    <input type="text" placeholder="Resposta incorreta 3">
-                    <input type="text" placeholder="URL da imagem 3">
+                    <input class="pergunta${i}RespostaTexto" type="text" placeholder="Resposta incorreta 3">
+                    <input class="pergunta${i}RespostaImagem" type="text" placeholder="URL da imagem 3">
                 </div>
             </div>
         </div>
         `
-        const primeiraPergunta = document.querySelector(".box-inputs");
-        primeiraPergunta.classList.remove("escondido");
-        const primeiroIConEdit = document.querySelector(".topo-container-inputs img");
-        primeiroIConEdit.classList.add("escondido");
     }
+    const primeiraPergunta = document.querySelector(".box-inputs");
+    primeiraPergunta.classList.remove("escondido");
+    const primeiroIConEdit = document.querySelector(".topo-container-inputs img");
+    primeiroIConEdit.classList.add("escondido");
 }
 function abrirEditarPergunta(elemento){
     const criarPerguntaDiv = elemento.parentNode.querySelector(".box-inputs")
     const iconEdit = elemento.querySelector("img")
     criarPerguntaDiv.classList.toggle("escondido")
     iconEdit.classList.toggle("escondido")
-    console.log(document.getElementById("pergunta1titulo"))
+}
+function verificarCriarPerguntas(){
+    for(let i = 1; i <= qtdsPerguntasQuiz; i++){
+        let perguntaTitulo = document.getElementById(`pergunta${i}Titulo`).value
+        let perguntaCor = document.getElementById(`pergunta${i}Cor`).value
+        let respostaCertaTexto = document.getElementById(`pergunta${i}RespostaCertaTexto`).value
+        let respostaCertaImagem = document.getElementById(`pergunta${i}RespostaCertaImagem`).value
+        let respostaTexto = document.querySelector(`.pergunta${i}RespostaTexto`).value
+        let respostaImagem = document.querySelector(`.pergunta${i}RespostaImagem`).value
+        if(perguntaTitulo.length > 20 && validColorHex(perguntaCor) && validURL(respostaCertaImagem) && respostaCertaTexto != "" && validURL(respostaImagem) && respostaTexto != ""){
+            const respostasTextoDiv = document.querySelectorAll(`.pergunta${i}RespostaTexto`)
+            const respostasImagemDiv = document.querySelectorAll(`.pergunta${i}RespostaImagem`)
+            for(let i = 0; i < respostasTextoDiv.length; i++){
+                let resposta = respostasTextoDiv[i];
+                let imagem = respostasImagemDiv[i];
+                if(Boolean(resposta.value) && validURL(imagem.value)){
+
+                }else if(!Boolean(resposta.value) && validURL(imagem.value)){
+                    return alert("Preencha os dados corretamente!");
+                }else if(Boolean(resposta.value) && !validURL(imagem.value)){
+                    return alert("Preencha os dados corretamente!");
+                }   
+            }
+            gerarCriadorNiveis();
+       }else{
+            return alert("Preencha os dados corretamente!");
+       }
+    }   
+}
+function gerarCriadorNiveis() {
 
 }
-
 function validarInfosBasicas(){
     if(tituloQuiz.length > 19 && tituloQuiz.length < 66 && validURL(imagemQuiz) && qtdsPerguntasQuiz >= 3 && qtdsNiveisQuiz >= 2){
         return true;
@@ -229,3 +256,7 @@ function validURL(str) {
       '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(str);
   }
+function validColorHex(str){
+    let teste = /^#[0-9A-F]{6}$/i
+    return teste.test(str);
+}
