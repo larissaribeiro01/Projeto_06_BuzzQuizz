@@ -4,7 +4,8 @@ acessarApi();
 let acertos=0;
 let score=0;
 let tituloQuiz;
-let qtdsPerguntasQuiz;
+let qtdsPerguntasQuizz;
+let qtdsNiveisQuizz;
 let listaSeusQuizzes=[];
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
@@ -114,7 +115,7 @@ function resultado () {
             </div>
             <div class="box-opcoes">
                 <div class="opcao">
-                    <img src="${nivels[i].image}" />
+                    <img src="${nivels[i].image}"/>
                 </div>
                 <span class="texto-opcao">${nivels[i].text}</div>
             </div>
@@ -161,20 +162,20 @@ function criarQuizz () {
 function verificarInformacoesBasicas() {
     tituloQuiz = document.querySelector(".container-inputs input:nth-child(1)").value
     imagemQuiz = document.querySelector(".container-inputs input:nth-child(2)").value
-    qtdsPerguntasQuiz = Number(document.querySelector(".container-inputs input:nth-child(3)").value)
-    qtdsNiveisQuiz = Number(document.querySelector(".container-inputs input:nth-child(4)").value)
+    qtdsPerguntasQuizz = Number(document.querySelector(".container-inputs input:nth-child(3)").value)
+    qtdsNiveisQuizz = Number(document.querySelector(".container-inputs input:nth-child(4)").value)
 
-    if(true){
+    if(validarInfosBasicas()){
         document.querySelector(".comeco").classList.add("escondido")
         document.querySelector(".criar-perguntas").classList.remove("escondido")
         gerarCriacaoPerguntas();
     }else{
-        alert("Preencha os dados corretamente!");
+        return alert("Preencha os dados corretamente!");
     }
 }
 function gerarCriacaoPerguntas(){
     let criarPerguntasDiv = document.querySelector(".container-perguntas");
-    for(let i = 1; i <= qtdsPerguntasQuiz; i++){
+    for(let i = 1; i <= qtdsPerguntasQuizz; i++){
         criarPerguntasDiv.innerHTML += `
         <div class="container-inputs">
             <div class="topo-container-inputs" onclick ="abrirEditarPergunta(this)">
@@ -213,7 +214,7 @@ function abrirEditarPergunta(elemento){
     iconEdit.classList.toggle("escondido")
 }
 function verificarCriarPerguntas(){
-    for(let i = 1; i <= qtdsPerguntasQuiz; i++){
+    for(let i = 1; i <= qtdsPerguntasQuizz; i++){
         let perguntaTitulo = document.getElementById(`pergunta${i}Titulo`).value
         let perguntaCor = document.getElementById(`pergunta${i}Cor`).value
         let respostaCertaTexto = document.getElementById(`pergunta${i}RespostaCertaTexto`).value
@@ -234,17 +235,44 @@ function verificarCriarPerguntas(){
                     return alert("Preencha os dados corretamente!");
                 }   
             }
-            gerarCriadorNiveis();
+            
        }else{
             return alert("Preencha os dados corretamente!");
        }
-    }   
+    }
+    gerarCriadorNiveis();   
+}
+function alerta(){
+    alert("Preencha os dados corretamente!");
 }
 function gerarCriadorNiveis() {
-
+    document.querySelector(".criar-niveis").classList.remove("escondido")
+    document.querySelector(".criar-perguntas").classList.add("escondido")
+    let criarNiveisDiv = document.querySelector(".container-niveis")
+    for(let i = 1; i <= qtdsNiveisQuizz; i++){
+        criarNiveisDiv.innerHTML += `
+        <div class="container-inputs">
+            <div class="topo-container-inputs" onclick ="abrirEditarPergunta(this)">
+               <span>Nível ${i}</span><img src="/src/icon-edit.png">
+           </div>
+            <div class="box-inputs escondido">
+                <div class="inputs">
+                    <input type="text" placeholder="Título do nível">
+                    <input type="text" placeholder="% de acerto mínima">
+                    <input type="text" placeholder="URL da imagem do nível">
+                    <input type="text" placeholder="Descrição do nível">
+                </div>
+            </div>
+        </div>
+        `
+    }
+    const primeiroNivel = document.querySelector(".container-niveis .box-inputs");
+    primeiroNivel.classList.remove("escondido");
+    const primeiroIConEdit = document.querySelector(".container-niveis .topo-container-inputs img");
+    primeiroIConEdit.classList.add("escondido");
 }
 function validarInfosBasicas(){
-    if(tituloQuiz.length > 19 && tituloQuiz.length < 66 && validURL(imagemQuiz) && qtdsPerguntasQuiz >= 3 && qtdsNiveisQuiz >= 2){
+    if(tituloQuiz.length > 19 && tituloQuiz.length < 66 && validURL(imagemQuiz) && qtdsPerguntasQuizz >= 3 && qtdsNiveisQuizz >= 2){
         return true;
     }
     return false;
@@ -262,8 +290,6 @@ function validColorHex(str){
     let teste = /^#[0-9A-F]{6}$/i
     return teste.test(str);
 }
-
-
 function adcSeusQuizzes () {
     const seusQuizzesSerializado=localStorage.getItem("seusQuizzes")
     const listaSeusQuizzes=JSON.parse(seusQuizzesSerializado);
@@ -279,7 +305,6 @@ function adcSeusQuizzes () {
     }
 
 }  
-
 function selecionarSeuQuizz(i) {
     document.querySelector(".tela1").classList.add('escondido')
     document.querySelector(".tela2").classList.remove('escondido')

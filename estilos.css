@@ -240,7 +240,7 @@ button {
     height: 54px;
     border-radius: 15px;
     margin-top: 85px;
-    margin-bottom: 300px;
+    margin-bottom: 180px;
     border: none;
     color: white;
     font-weight: 400;
@@ -249,7 +249,7 @@ button {
     transition: 0.3s linear;
 }
 button:active{
-    transform: scale(0.95);
+    transform: scale(0.90);
 }
 .espaco {
     height: 22px;
