@@ -7,7 +7,7 @@ let tituloQuiz;
 let qtdsPerguntasQuiz;
 let listaSeusQuizzes=[];
 function acessarApi () {
-    const promise=axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
+    const promise=axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
     promise.then(carregarDados); 
 
 }
