@@ -113,11 +113,11 @@ function resultado () {
             <div class="box-texto" style="background-color: red;">
                 <span>${nivels[i].title}</span>
             </div>
-            <div class="box-opcoes">
+            <div class="box-resultado">
                 <div class="opcao">
                     <img src="${nivels[i].image}"/>
                 </div>
-                <span class="texto-opcao">${nivels[i].text}</div>
+                <span class="texto-opcao">${nivels[i].text}</span></div>
             </div>
             <button class="reiniciar" onclick="reiniciarQuizz()">Reiniciar Quizz</button>
             <span class="voltarhome" onclick="voltarHome()">Voltar para home</span>    
