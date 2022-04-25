@@ -30,10 +30,7 @@ function adcQuizzes () {
         <h3 onclick="selecionarQuizz(${i})">${quizzes[i].title}</h3>
     </div>`
     }
-    
-
 }
-
 function selecionarQuizz(i) {
     document.querySelector(".tela1").classList.add('escondido')
     document.querySelector(".tela2").classList.remove('escondido')
