@@ -384,7 +384,7 @@ ion-icon {
         width: 100%;
     }
 
-    .container-pergunta {
+    .container-perguntas, .container-inputs {
         width: 100%;
         box-sizing: border-box;
     }
@@ -411,4 +411,9 @@ ion-icon {
         justify-content: center;
         align-items: center;
     }
+
+    
+    
+
+   
 }
