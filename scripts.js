@@ -9,6 +9,7 @@ let qtdsNiveisQuizz;
 let listaSeusQuizzes=[];
 let quizzCriado = {}
 let quizzDoUsuario;
+const arrayIds = JSON.parse(localStorage.getItem("idQuizzCriado"));
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
     promise.then(carregarDados); 
@@ -162,10 +163,23 @@ function criarQuizz () {
     document.querySelector(".sucesso-quiz").classList.add("escondido")
     document.querySelector(".tela3").classList.remove('escondido');
     document.querySelector(".tela1").classList.add('escondido');
-    document.querySelector(".comeco").classList.remove("escondido");
+    const InfosBasicasDiv = document.querySelector(".comeco")
+    InfosBasicasDiv.classList.remove("escondido");
+    InfosBasicasDiv.innerHTML = `
+    <div class="conteudo">
+        <span>Comece pelo começo</span>
+        <div class="container-inputs">
+            <input type="text" placeholder="Título do seu quizz">
+            <input type="text" placeholder="URL da imagem do seu quizz">
+            <input type="text" placeholder="Quantidades de perguntas do quizz">
+            <input type="text" placeholder="Quantidades de níveis do quizz">
+        </div>
+        <button onclick="verificarInformacoesBasicas()">Prosseguir pra criar perguntas</button>
+    </div>
+    `
 }
 
-function verificarInformacoesBasicas() {
+function verificarInformacoesBasicas() {  
     tituloQuiz = document.querySelector(".container-inputs input:nth-child(1)").value
     imagemQuiz = document.querySelector(".container-inputs input:nth-child(2)").value
     qtdsPerguntasQuizz = Number(document.querySelector(".container-inputs input:nth-child(3)").value)
@@ -188,6 +202,7 @@ function verificarInformacoesBasicas() {
 }
 function gerarCriacaoPerguntas(){
     let criarPerguntasDiv = document.querySelector(".container-perguntas");
+    criarPerguntasDiv.innerHTML = "";
     for(let i = 1; i <= qtdsPerguntasQuizz; i++){
         criarPerguntasDiv.innerHTML += `
         <div class="container-inputs">
@@ -272,8 +287,9 @@ function verificarCriarPerguntas(){
 function gerarCriadorNiveis() {
     document.querySelector(".criar-niveis").classList.remove("escondido")
     document.querySelector(".criar-perguntas").classList.add("escondido")
-    let criarNiveisDiv = document.querySelector(".container-niveis")
-    for(let i = 1; i <= qtdsNiveisQuizz; i++){
+    let criarNiveisDiv = document.querySelector(".container-niveis");
+    criarNiveisDiv.innerHTML = '';
+        for(let i = 1; i <= qtdsNiveisQuizz; i++){
         criarNiveisDiv.innerHTML += `
         <div class="container-inputs">
             <div class="topo-container-inputs" onclick ="abrirEditarPergunta(this)">
@@ -344,6 +360,9 @@ function finalizarCriarQuizz(quiz){
         </div>
     `
     quizzDoUsuario = quiz.data;
+    arrayIds.push(quizzDoUsuario.id);
+    let arrayIdsSerializada = JSON.stringify(arrayIds);
+    localStorage.setItem("idQuizzCriado", arrayIdsSerializada);
 }
 function acessarQuizzCriado(){
     document.querySelector(".tela3").classList.add("escondido")
