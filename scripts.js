@@ -179,7 +179,7 @@ function gerarCriacaoPerguntas(){
         criarPerguntasDiv.innerHTML += `
         <div class="container-inputs">
             <div class="topo-container-inputs" onclick ="abrirEditarPergunta(this)">
-               <span>Pergunta ${i}</span><img src="/src/icon-edit.png">
+               <span>Pergunta ${i}</span><img src="src/icon-edit.png">
            </div>
             <div class="box-inputs escondido">
                 <div class="inputs">
@@ -253,14 +253,14 @@ function gerarCriadorNiveis() {
         criarNiveisDiv.innerHTML += `
         <div class="container-inputs">
             <div class="topo-container-inputs" onclick ="abrirEditarPergunta(this)">
-               <span>Nível ${i}</span><img src="/src/icon-edit.png">
+               <span>Nível ${i}</span><img src="src/icon-edit.png">
            </div>
             <div class="box-inputs escondido">
                 <div class="inputs">
-                    <input type="text" placeholder="Título do nível">
-                    <input type="text" placeholder="% de acerto mínima">
-                    <input type="text" placeholder="URL da imagem do nível">
-                    <input type="text" placeholder="Descrição do nível">
+                    <input id="nivel${i}Titulo" type="text" placeholder="Título do nível">
+                    <input id="nivel${i}%Minima" type="text" placeholder="% de acerto mínima">
+                    <input id="nivel${i}Imagem" type="text" placeholder="URL da imagem do nível">
+                    <input id="nivel${i}Descricao" type="text" placeholder="Descrição do nível">
                 </div>
             </div>
         </div>
@@ -270,6 +270,20 @@ function gerarCriadorNiveis() {
     primeiroNivel.classList.remove("escondido");
     const primeiroIConEdit = document.querySelector(".container-niveis .topo-container-inputs img");
     primeiroIConEdit.classList.add("escondido");
+}
+function verificarCriarNiveis() {
+    for(let i = 1; i <= qtdsNiveisQuizz; i++){
+        let tituloNivel = document.getElementById(`nivel${i}Titulo`).value;
+        let porcentagemMinima = Number(document.getElementById(`nivel${i}%Minima`).value);
+        let imagemNivel = document.getElementById(`nivel${i}Imagem`).value;
+        let descricaoNivel = document.getElementById(`nivel${i}Descricao`).value;
+        if(tituloNivel > 10 && porcentagemMinima > 0 && porcentagemMinima < 100 && descricaoNivel > 30 && validURL(imagemNivel)){
+            
+        }else{
+            return alert("Preencha os dados corretamente!");
+        }
+    }
+        
 }
 function validarInfosBasicas(){
     if(tituloQuiz.length > 19 && tituloQuiz.length < 66 && validURL(imagemQuiz) && qtdsPerguntasQuizz >= 3 && qtdsNiveisQuizz >= 2){
