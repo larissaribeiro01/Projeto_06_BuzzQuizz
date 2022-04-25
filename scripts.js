@@ -152,6 +152,7 @@ function voltarHome () {
     document.querySelector(".conteudo-quiz").innerHTML=" "
     document.querySelector(".tela1").classList.remove('escondido');
     document.querySelector(".tela2").classList.add('escondido');
+    document.querySelector(".tela3").classList.add('escondido');
     document.querySelector(".tela1").scrollIntoView(true);
 }
 
@@ -340,6 +341,8 @@ function finalizarCriarQuizz(){
     `
 }
 function acessarQuizzCriado(){
+    document.querySelector(".tela3").classList.add("escondido")
+    document.querySelector(".tela2").classList.remove("escondido")
     comecarQuiz(quizzCriado);
 }
 function validarInfosBasicas(){
