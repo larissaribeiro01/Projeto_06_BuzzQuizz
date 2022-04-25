@@ -8,6 +8,7 @@ let qtdsPerguntasQuizz;
 let qtdsNiveisQuizz;
 let listaSeusQuizzes=[];
 let quizzCriado = {}
+let quizzDoUsuario;
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
     promise.then(carregarDados); 
@@ -24,7 +25,7 @@ function carregarDados (response) {
 function adcQuizzes () {
     for (let i=0; i<quizzes.length; i++) {
         document.querySelector(".quizzes.geral").innerHTML+=`<div>
-        <img src="${quizzes[i].image}">
+        <img src="${quizzes[i].image}">você pode armazen
         <h3 onclick="selecionarQuizz(${i})">${quizzes[i].title}</h3>
     </div>`
     }
@@ -157,8 +158,11 @@ function voltarHome () {
 }
 
 function criarQuizz () {
+    quizzCriado = {};
+    document.querySelector(".sucesso-quiz").classList.add("escondido")
     document.querySelector(".tela3").classList.remove('escondido');
     document.querySelector(".tela1").classList.add('escondido');
+    document.querySelector(".comeco").classList.remove("escondido");
 }
 
 function verificarInformacoesBasicas() {
@@ -322,7 +326,7 @@ function verificarCriarNiveis() {
     request.then(finalizarCriarQuizz);
     request.catch(erro => console.log(erro))      
 }
-function finalizarCriarQuizz(){
+function finalizarCriarQuizz(quiz){
     const telaSucesso = document.querySelector(".sucesso-quiz");
     const telaCriarNiveis = document.querySelector(".criar-niveis");
     telaSucesso.classList.remove("escondido");
@@ -339,11 +343,13 @@ function finalizarCriarQuizz(){
             <span class="voltarhome" onclick="voltarHome()">Voltar para home</span>
         </div>
     `
+    quizzDoUsuario = quiz.data;
 }
 function acessarQuizzCriado(){
     document.querySelector(".tela3").classList.add("escondido")
     document.querySelector(".tela2").classList.remove("escondido")
-    comecarQuiz(quizzCriado);
+    quizzSelecionado = quizzDoUsuario
+    comecarQuiz(quizzSelecionado);
 }
 function validarInfosBasicas(){
     if(tituloQuiz.length > 19 && tituloQuiz.length < 66 && validURL(imagemQuiz) && qtdsPerguntasQuizz >= 3 && qtdsNiveisQuizz >= 2){
