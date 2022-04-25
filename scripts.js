@@ -19,14 +19,22 @@ function acessarApi () {
 function carregarDados (response) {
     quizzes=response.data;
     adcQuizzes ();
-    adcSeusQuizzes();
-    
 }
+
+ 
 
 function adcQuizzes () {
     for (let i=0; i<quizzes.length; i++) {
+        if (arrayIds.includes(quizzes[i].id)) {
+            document.querySelector(".seusquizzes").classList.remove('escondido')
+            document.querySelector(".quizzbox").classList.add('escondido')
+            document.querySelector(".quizzes").innerHTML+=`<div>
+            <img src="${quizzes[i].image}">
+            <h3 onclick="selecionarQuizz(${i})">${quizzes[i].title}</h3>
+            </div>`
+        }
         document.querySelector(".quizzes.geral").innerHTML+=`<div>
-        <img src="${quizzes[i].image}">você pode armazen
+        <img src="${quizzes[i].image}">
         <h3 onclick="selecionarQuizz(${i})">${quizzes[i].title}</h3>
     </div>`
     }
@@ -156,27 +164,11 @@ function voltarHome () {
 }
 
 function criarQuizz () {
-    quizzCriado = {};
-    document.querySelector(".sucesso-quiz").classList.add("escondido")
     document.querySelector(".tela3").classList.remove('escondido');
     document.querySelector(".tela1").classList.add('escondido');
-    const InfosBasicasDiv = document.querySelector(".comeco")
-    InfosBasicasDiv.classList.remove("escondido");
-    InfosBasicasDiv.innerHTML = `
-    <div class="conteudo">
-        <span>Comece pelo começo</span>
-        <div class="container-inputs">
-            <input type="text" placeholder="Título do seu quizz">
-            <input type="text" placeholder="URL da imagem do seu quizz">
-            <input type="text" placeholder="Quantidades de perguntas do quizz">
-            <input type="text" placeholder="Quantidades de níveis do quizz">
-        </div>
-        <button onclick="verificarInformacoesBasicas()">Prosseguir pra criar perguntas</button>
-    </div>
-    `
 }
 
-function verificarInformacoesBasicas() {  
+function verificarInformacoesBasicas() {
     tituloQuiz = document.querySelector(".container-inputs input:nth-child(1)").value
     imagemQuiz = document.querySelector(".container-inputs input:nth-child(2)").value
     qtdsPerguntasQuizz = Number(document.querySelector(".container-inputs input:nth-child(3)").value)
@@ -199,7 +191,6 @@ function verificarInformacoesBasicas() {
 }
 function gerarCriacaoPerguntas(){
     let criarPerguntasDiv = document.querySelector(".container-perguntas");
-    criarPerguntasDiv.innerHTML = "";
     for(let i = 1; i <= qtdsPerguntasQuizz; i++){
         criarPerguntasDiv.innerHTML += `
         <div class="container-inputs">
@@ -284,9 +275,8 @@ function verificarCriarPerguntas(){
 function gerarCriadorNiveis() {
     document.querySelector(".criar-niveis").classList.remove("escondido")
     document.querySelector(".criar-perguntas").classList.add("escondido")
-    let criarNiveisDiv = document.querySelector(".container-niveis");
-    criarNiveisDiv.innerHTML = '';
-        for(let i = 1; i <= qtdsNiveisQuizz; i++){
+    let criarNiveisDiv = document.querySelector(".container-niveis")
+    for(let i = 1; i <= qtdsNiveisQuizz; i++){
         criarNiveisDiv.innerHTML += `
         <div class="container-inputs">
             <div class="topo-container-inputs" onclick ="abrirEditarPergunta(this)">
@@ -339,7 +329,7 @@ function verificarCriarNiveis() {
     request.then(finalizarCriarQuizz);
     request.catch(erro => console.log(erro))      
 }
-function finalizarCriarQuizz(quiz){
+function finalizarCriarQuizz(){
     const telaSucesso = document.querySelector(".sucesso-quiz");
     const telaCriarNiveis = document.querySelector(".criar-niveis");
     telaSucesso.classList.remove("escondido");
@@ -356,16 +346,11 @@ function finalizarCriarQuizz(quiz){
             <span class="voltarhome" onclick="voltarHome()">Voltar para home</span>
         </div>
     `
-    quizzDoUsuario = quiz.data;
-    arrayIds.push(quizzDoUsuario.id);
-    let arrayIdsSerializada = JSON.stringify(arrayIds);
-    localStorage.setItem("idQuizzCriado", arrayIdsSerializada);
 }
 function acessarQuizzCriado(){
     document.querySelector(".tela3").classList.add("escondido")
     document.querySelector(".tela2").classList.remove("escondido")
-    quizzSelecionado = quizzDoUsuario
-    comecarQuiz(quizzSelecionado);
+    comecarQuiz(quizzCriado);
 }
 function validarInfosBasicas(){
     if(tituloQuiz.length > 19 && tituloQuiz.length < 66 && validURL(imagemQuiz) && qtdsPerguntasQuizz >= 3 && qtdsNiveisQuizz >= 2){
@@ -385,26 +370,4 @@ function validURL(str) {
 function validColorHex(str){
     let teste = /^#[0-9A-F]{6}$/i
     return teste.test(str);
-}
-function adcSeusQuizzes () {
-    const seusQuizzesSerializado=localStorage.getItem("seusQuizzes")
-    const listaSeusQuizzes=JSON.parse(seusQuizzesSerializado);
-    if (listaSeusQuizzes!=null) {
-        document.querySelector(".seusquizzes").classList.remove('escondido')
-        document.querySelector(".quizzbox").classList.add('escondido')
-        for (let i=0; i<listaSeusQuizzes.length; i++) {
-            document.querySelector(".quizzes").innerHTML+=`<div>
-            <img src="${listaSeusQuizzes[i].image}">
-            <h3 onclick="selecionarSeuQuizz(${i})">${listaSeusQuizzes.title}</h3>
-        </div>`
-        }
-    }
-
-}  
-function selecionarSeuQuizz(i) {
-    document.querySelector(".tela1").classList.add('escondido')
-    document.querySelector(".tela2").classList.remove('escondido')
-    quizzSelecionado=listaSeusQuizzes[i]
-    document.querySelector(".tela2").scrollIntoView(true)
-    comecarQuiz(quizzSelecionado);
 }
