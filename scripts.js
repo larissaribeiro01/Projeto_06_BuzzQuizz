@@ -7,6 +7,7 @@ let tituloQuiz;
 let qtdsPerguntasQuizz;
 let qtdsNiveisQuizz;
 let listaSeusQuizzes=[];
+let quizzCriado = {}
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
     promise.then(carregarDados); 
@@ -169,7 +170,14 @@ function verificarInformacoesBasicas() {
         document.querySelector(".comeco").classList.add("escondido")
         document.querySelector(".criar-perguntas").classList.remove("escondido")
         gerarCriacaoPerguntas();
+        quizzCriado = {
+            title: tituloQuiz,
+            image: imagemQuiz,
+            questions: [],
+            levels: []
+        }
     }else{
+        quizzCriado = {};
         return alert("Preencha os dados corretamente!");
     }
 }
@@ -222,28 +230,39 @@ function verificarCriarPerguntas(){
         let respostaTexto = document.querySelector(`.pergunta${i}RespostaTexto`).value
         let respostaImagem = document.querySelector(`.pergunta${i}RespostaImagem`).value
         if(perguntaTitulo.length > 20 && validColorHex(perguntaCor) && validURL(respostaCertaImagem) && respostaCertaTexto != "" && validURL(respostaImagem) && respostaTexto != ""){
+            quizzCriado.questions.push({
+                title: perguntaTitulo,
+                color: perguntaCor,
+                answers: [{
+                    text: respostaCertaTexto,
+                    image: respostaCertaImagem,
+                    isCorrectAnswer: true
+                }]
+            })
+            
             const respostasTextoDiv = document.querySelectorAll(`.pergunta${i}RespostaTexto`)
             const respostasImagemDiv = document.querySelectorAll(`.pergunta${i}RespostaImagem`)
-            for(let i = 0; i < respostasTextoDiv.length; i++){
-                let resposta = respostasTextoDiv[i];
-                let imagem = respostasImagemDiv[i];
+            for(let j = 0; j < respostasTextoDiv.length; j++){
+                let resposta = respostasTextoDiv[j];
+                let imagem = respostasImagemDiv[j];
                 if(Boolean(resposta.value) && validURL(imagem.value)){
-
-                }else if(!Boolean(resposta.value) && validURL(imagem.value)){
+                    quizzCriado.questions[i-1].answers.push({
+                        text: resposta.value,
+                        image: imagem.value,
+                        isCorrectAnswer: false
+                    })
+                }else if(!Boolean(resposta.value) && validURL(imagem.value) || Boolean(resposta.value) && !validURL(imagem.value)){
+                    quizzCriado.questions = [];
                     return alert("Preencha os dados corretamente!");
-                }else if(Boolean(resposta.value) && !validURL(imagem.value)){
-                    return alert("Preencha os dados corretamente!");
-                }   
+                }  
             }
             
        }else{
+            quizzCriado.questions = [];
             return alert("Preencha os dados corretamente!");
        }
     }
     gerarCriadorNiveis();   
-}
-function alerta(){
-    alert("Preencha os dados corretamente!");
 }
 function gerarCriadorNiveis() {
     document.querySelector(".criar-niveis").classList.remove("escondido")
@@ -272,18 +291,56 @@ function gerarCriadorNiveis() {
     primeiroIConEdit.classList.add("escondido");
 }
 function verificarCriarNiveis() {
+    let validPorcentagemMin = false;
     for(let i = 1; i <= qtdsNiveisQuizz; i++){
         let tituloNivel = document.getElementById(`nivel${i}Titulo`).value;
         let porcentagemMinima = Number(document.getElementById(`nivel${i}%Minima`).value);
         let imagemNivel = document.getElementById(`nivel${i}Imagem`).value;
         let descricaoNivel = document.getElementById(`nivel${i}Descricao`).value;
-        if(tituloNivel > 10 && porcentagemMinima > 0 && porcentagemMinima < 100 && descricaoNivel > 30 && validURL(imagemNivel)){
-            
+        
+        if(tituloNivel.length > 10 && porcentagemMinima >= 0 && porcentagemMinima <= 100 && descricaoNivel.length > 30 && validURL(imagemNivel)){
+            quizzCriado.levels.push({
+                title: tituloNivel,
+                image: imagemNivel,
+                text: descricaoNivel,
+                minValue: porcentagemMinima
+            })
+            if(porcentagemMinima === 0){
+                validPorcentagemMin = true;
+            }
         }else{
+            quizzCriado.levels = [];
             return alert("Preencha os dados corretamente!");
         }
     }
-        
+    if(validPorcentagemMin === false){
+        quizzCriado.levels = [];
+        return alert("Preencha os dados corretamente!");
+    }
+    const request = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', quizzCriado);
+    request.then(finalizarCriarQuizz);
+    request.catch(erro => console.log(erro))      
+}
+function finalizarCriarQuizz(){
+    const telaSucesso = document.querySelector(".sucesso-quiz");
+    const telaCriarNiveis = document.querySelector(".criar-niveis");
+    telaSucesso.classList.remove("escondido");
+    telaCriarNiveis.classList.add("escondido");
+
+    document.querySelector(".sucesso-quiz .conteudo").innerHTML = `
+        <span>Seu quizz está pronto!</span>
+        <div class="quizz-criado">
+            <img src="${quizzCriado.image}" alt="">
+            <h4>${quizzCriado.title}</h4>
+        </div>
+        <div class="botoes">
+            <button class="reiniciar" onclick="acessarQuizzCriado()">Acessar Quizz</button>
+            <span class="voltarhome" onclick="voltarHome()">Voltar para home</span>
+        </div>
+    `
+}
+function acessarQuizzCriado(){
+    comecarQuiz(quizzCriado);
 }
 function validarInfosBasicas(){
     if(tituloQuiz.length > 19 && tituloQuiz.length < 66 && validURL(imagemQuiz) && qtdsPerguntasQuizz >= 3 && qtdsNiveisQuizz >= 2){
@@ -326,4 +383,3 @@ function selecionarSeuQuizz(i) {
     document.querySelector(".tela2").scrollIntoView(true)
     comecarQuiz(quizzSelecionado);
 }
-
