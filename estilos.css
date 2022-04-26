@@ -159,10 +159,10 @@ h3 {
 }
 .box-texto {
     height: 137px;
+    padding: 0px 22px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(47, 22, 158);
     margin-bottom: 20px;
 }
 .box-texto span {

@@ -9,8 +9,15 @@ let qtdsNiveisQuizz;
 let listaSeusQuizzes=[];
 let quizzCriado = {}
 let quizzDoUsuario;
-const arrayIds = JSON.parse(localStorage.getItem("idQuizzCriado"));
+let arrayIds = []
 
+function verificarLocalStorage(){
+    if(localStorage.getItem("idQuizzCriado") == null){
+        
+        localStorage.setItem("idQuizzCriado","[]");   
+    }
+    arrayIds = JSON.parse(localStorage.getItem("idQuizzCriado")); 
+}
 function acessarApi () {
     const promise=axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
     promise.then(carregarDados); 
@@ -19,6 +26,7 @@ function acessarApi () {
 
 function carregarDados (response) {
     quizzes=response.data;
+    verificarLocalStorage();
     adcQuizzes ();
     adcSeusQuizzes();
     
