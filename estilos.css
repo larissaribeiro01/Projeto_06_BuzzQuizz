@@ -366,7 +366,7 @@ ion-icon:hover{
     object-fit: cover;
     border-radius: 5px;
 }
-.sucesso-quiz span {
+.sucesso-quiz span:nth-child(2){
     font-weight: 400;
     font-size: 21px;
 }
@@ -386,7 +386,6 @@ ion-icon:hover{
         flex-direction: column;
         align-items: center;
     }
-    
     h3 {
         max-width: 340px;  
     }
@@ -397,23 +396,29 @@ ion-icon:hover{
     .tela2 {
         width: 100%;
     }
-
+    .conteudo {
+        margin-top: 120px;
+    }
     .conteudo-quiz {
         width: 100%;
     }
 
-    .container-perguntas, .container-inputs, .container-niveis {
+    .container-perguntas,.container-pergunta, .container-inputs, .container-niveis {
         width: 100%;
         box-sizing: border-box;
     }
-
-    .opcao img {
-        width: 163px;
-        height: 113px;
+    .opcao {
+        width: 48%;
     }
-
+    .container-pergunta img {
+        width: 100%;
+        object-fit:cover;
+    }
+    .resultado img{
+        width: 100%;
+    }
     .texto-opcao {
-        max-width: 163px;
+        max-width: 100%;
     }
 
     .topo-quiz span {
@@ -443,17 +448,15 @@ ion-icon:hover{
         flex-direction: column;
         align-items: center;
     }
-    .quizzes{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
     .topo-seusquizzes h2{
         margin-top: 30px;
         margin-left: 0px
     }
     ion-icon{
         left:90%;
+    }
+    .quizz-criado{
+        width: 91%;
     }
 
 }

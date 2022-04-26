@@ -1,6 +1,5 @@
-quizzes=[]
-quizzSelecionado=[]
-acessarApi();
+let quizzes=[]
+let quizzSelecionado=[]
 let acertos=0;
 let score=0;
 let tituloQuiz;
@@ -10,6 +9,7 @@ let listaSeusQuizzes=[];
 let quizzCriado = {}
 let quizzDoUsuario;
 let arrayIds = []
+acessarApi();
 
 function verificarLocalStorage(){
     if(localStorage.getItem("idQuizzCriado") == null){
@@ -97,7 +97,7 @@ function comparador() {
 function selecionarResposta (i, j) {
     next=i+1
     setTimeout(function () {
-        document.querySelector(".box-texto.q"+next).scrollIntoView();
+        document.querySelector(`.box-texto.q${next}`).scrollIntoView();
     }, 2000)
     numRespostas=quizzSelecionado.questions[i].answers.length
     const naoSelect=document.querySelector(".imagem.q"+i+".a"+j+".naoSelecionada")
@@ -135,9 +135,7 @@ function resultado () {
                 <span>${nivels[i].title}</span>
             </div>
             <div class="box-resultado">
-                <div class="opcao">
                     <img src="${nivels[i].image}"/>
-                </div>
                 <span class="texto-opcao">${nivels[i].text}</span></div>
             </div>
             <button class="reiniciar" onclick="reiniciarQuizz()">Reiniciar Quizz</button>
