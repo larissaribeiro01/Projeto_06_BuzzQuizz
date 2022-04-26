@@ -35,7 +35,7 @@ function carregarDados (response) {
 function adcQuizzes () { 
     for (let i=0; i<quizzes.length; i++) { 
         if (arrayIds.includes(quizzes[i].id)) { 
-            document.querySelector(".seusquizzes").classList.remove('escondido') 
+            document.querySelector(".topo-seusquizzes").classList.remove('escondido') 
             document.querySelector(".quizzbox").classList.add('escondido') 
             document.querySelector(".quizzes").innerHTML+=`
             <div> <img src="${quizzes[i].image}"> 
